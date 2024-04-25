@@ -24,6 +24,7 @@ output:
     dev: svg
 ---
 
+<<<<<<< HEAD
 ```{r setup, include = FALSE}
 # DO NOT ALTER THIS CHUNK
 knitr::opts_chunk$set(
@@ -63,4 +64,6 @@ suppressPackageStartupMessages(library(boot))
 
 
 
+=======
+>>>>>>> 6684d83f2e8e8902ff01c8f07dc9b972acd0a256
 
