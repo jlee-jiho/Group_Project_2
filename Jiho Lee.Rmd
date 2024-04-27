@@ -1,0 +1,60 @@
+---
+title: "Final Project (Group 2)"
+author: ""
+date: "`r Sys.Date()`"
+documentclass: article
+geometry: margin=1in
+fontsize: 11pt
+output:
+  pdf_document:
+    toc: false
+    df_print: kable
+    fig_caption: false
+    number_sections: false
+    dev: pdf
+    highlight: tango
+  html_document:
+    theme: default
+    self_contained: true
+    toc: false
+    df_print: kable
+    fig_caption: false
+    number_sections: false
+    smart: true
+    dev: svg
+---
+
+```{r setup, include = FALSE}
+# DO NOT ALTER THIS CHUNK
+knitr::opts_chunk$set(
+  echo = TRUE,
+  eval = TRUE,
+  fig.width = 5,
+  fig.asp = 0.618,
+  out.width = "70%",
+  dpi = 120,
+  fig.align = "center",
+  cache = FALSE
+)
+is_pdf <- try (("pdf_document" %in% 
+                  rmarkdown::all_output_formats(knitr::current_input())), silent=TRUE)
+is_pdf <- (is_pdf == TRUE)
+
+# Load required packages
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(broom))
+suppressPackageStartupMessages(library(modelr))
+suppressPackageStartupMessages(library(plotly))
+suppressPackageStartupMessages(library(readxl))
+suppressPackageStartupMessages(library(infer))
+suppressPackageStartupMessages(library(lubridate))
+suppressPackageStartupMessages(library(geosphere))
+suppressPackageStartupMessages(library(lubridate))
+suppressPackageStartupMessages(library(infer))
+suppressPackageStartupMessages(library(usmap))
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(formattable))
+suppressPackageStartupMessages(library(plotrix))
+suppressPackageStartupMessages(library(ggpubr))
+suppressPackageStartupMessages(library(boot))
+```
