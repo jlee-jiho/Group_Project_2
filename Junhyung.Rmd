@@ -37,7 +37,8 @@ knitr::opts_chunk$set(
   cache = FALSE
 )
 is_pdf <- try (("pdf_document" %in% 
-                  rmarkdown::all_output_formats(knitr::current_input())), silent=TRUE)
+                  rmarkdown::all_output_formats(knitr::current_input())), 
+               silent=TRUE)
 is_pdf <- (is_pdf == TRUE)
 
 # Load required packages
