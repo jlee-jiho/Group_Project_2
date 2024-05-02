@@ -60,8 +60,117 @@ suppressPackageStartupMessages(library(ggpubr))
 suppressPackageStartupMessages(library(boot))
 ```
 
+```{r}
+library(readxl)
+library(dplyr)
+```
 
-EUgene Kim
+
+```{r}
+library(dplyr)
+data <- read_excel("WHR_2015.xlsx", col_names = TRUE)
+data <- data %>%
+  rename(
+    HappinessScore = `Happiness Score`,
+    GDPPerCapita = `Economy (GDP per Capita)`, 
+  )
+colnames(data)
+```
+
+```{r}
+colnames(data) <- c("Country", "Region", "Happiness Score","Happiness Rank","Economy (GDP per Capita","Health (Life Expectancy)", "Freedom", "Trust (Government Corruption)", "Family", "Generosity", "Dystopia Residual", "Standard Error") 
+```
+
+```{r}
+colnames(data)
+head(data)
+```
+```{r}
+data <- read_excel("WHR_2015.xlsx", col_names = TRUE)
+data$`Economy (GDP per Capita)` <- as.factor(data$`Economy (GDP per Capita)`)
+```
 
 
+
+```{r}
+library(readxl)
+library(dplyr)
+
+data <- read_excel("WHR_2015.xlsx")
+
+print(colnames(data))
+
+summary_stats <- data %>%
+  summarize(
+    Mean = mean(`Happiness Score`, na.rm = TRUE),  
+    Median = median(`Happiness Score`, na.rm = TRUE),  
+    Standard_Deviation = sd(`Happiness Score`, na.rm = TRUE),
+    Minimum = min(`Happiness Score`, na.rm = TRUE),
+    Maximum = max(`Happiness Score`, na.rm = TRUE)
+  )
+
+print(summary_stats)
+
+```
+
+
+```{r}
+data %>%
+  summarize(center = median(`Happiness Score`, na.rm = TRUE))
+```
+
+
+
+```{r}
+summary_stats <- data %>%
+  summarize(
+    Mean = mean(`Economy (GDP per Capita)`, na.rm = TRUE),  
+    Median = median(`Economy (GDP per Capita)`, na.rm = TRUE),  
+    Standard_Deviation = sd(`Economy (GDP per Capita)`, na.rm = TRUE),
+    Minimum = min(`Economy (GDP per Capita)`, na.rm = TRUE),
+    Maximum = max(`Economy (GDP per Capita)`, na.rm = TRUE)
+  )
+
+print(summary_stats)
+
+```
+
+
+```{r}
+summary(data)
+
+data_long <- data %>%
+  select(`Happiness Score`, `Economy (GDP per Capita)`, Family, `Health (Life Expectancy)`, `Trust (Government Corruption)`, Generosity) %>%
+  pivot_longer(cols = -`Happiness Score`, names_to = "Variable", values_to = "Value")
+
+ggplot(data_long, aes(x = Variable, y = `Happiness Score`, fill = Variable)) +
+  geom_boxplot() +
+  labs(title = "Effect of Various Factors on Happiness Score",
+       x = "Variable",
+       y = "Happiness Score") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  
+```
+
+```{r}
+ggplot(data, aes(x = factor(1), y = `Happiness Score`)) +
+  geom_boxplot(aes(fill = `Economy (GDP per Capita)`)) +
+  scale_fill_gradient(low = "blue", high = "red") +
+  labs(title = "Box Plot of Happiness Score by Economy (GDP per Capita)",
+       x = "Economy (GDP per Capita)",
+       y = "Happiness Score") +
+  theme_minimal() +
+  theme(legend.position = "none")  
+```
+
+```{r}
+ggplot(data, aes(x = factor(1), y = `Happiness Score`)) +
+  geom_violin(aes(fill = `Economy (GDP per Capita)`)) +
+  scale_fill_gradient(low = "blue", high = "red") +
+  labs(title = "Violin Plot of Happiness Score by Economy (GDP per Capita)",
+       x = "Economy (GDP per Capita)",
+       y = "Happiness Score") +
+  theme_minimal() +
+  theme(legend.position = "none")  
+```
 
