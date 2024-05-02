@@ -114,56 +114,5 @@ data %>%
 
 
 
-```{r}
-summary_stats <- data %>%
-  summarize(
-    Mean = mean(`Economy (GDP per Capita)`, na.rm = TRUE),  
-    Median = median(`Economy (GDP per Capita)`, na.rm = TRUE),  
-    Standard_Deviation = sd(`Economy (GDP per Capita)`, na.rm = TRUE),
-    Minimum = min(`Economy (GDP per Capita)`, na.rm = TRUE),
-    Maximum = max(`Economy (GDP per Capita)`, na.rm = TRUE)
-  )
 
-print(summary_stats)
-
-```
-
-
-```{r}
-summary(data)
-
-data_long <- data %>%
-  select(`Happiness Score`, `Economy (GDP per Capita)`, Family, `Health (Life Expectancy)`, `Trust (Government Corruption)`, Generosity) %>%
-  pivot_longer(cols = -`Happiness Score`, names_to = "Variable", values_to = "Value")
-
-ggplot(data_long, aes(x = Variable, y = `Happiness Score`, fill = Variable)) +
-  geom_boxplot() +
-  labs(title = "Effect of Various Factors on Happiness Score",
-       x = "Variable",
-       y = "Happiness Score") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))  
-```
-
-```{r}
-ggplot(data, aes(x = factor(1), y = `Happiness Score`)) +
-  geom_boxplot(aes(fill = `Economy (GDP per Capita)`)) +
-  scale_fill_gradient(low = "blue", high = "red") +
-  labs(title = "Box Plot of Happiness Score by Economy (GDP per Capita)",
-       x = "Economy (GDP per Capita)",
-       y = "Happiness Score") +
-  theme_minimal() +
-  theme(legend.position = "none")  
-```
-
-```{r}
-ggplot(data, aes(x = factor(1), y = `Happiness Score`)) +
-  geom_violin(aes(fill = `Economy (GDP per Capita)`)) +
-  scale_fill_gradient(low = "blue", high = "red") +
-  labs(title = "Violin Plot of Happiness Score by Economy (GDP per Capita)",
-       x = "Economy (GDP per Capita)",
-       y = "Happiness Score") +
-  theme_minimal() +
-  theme(legend.position = "none")  
-```
 
