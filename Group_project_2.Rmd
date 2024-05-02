@@ -1,6 +1,6 @@
 ---
 title: "Final Project (Group 2)"
-author: ""
+author: "Group 2"
 date: "`r Sys.Date()`"
 documentclass: article
 geometry: margin=1in
