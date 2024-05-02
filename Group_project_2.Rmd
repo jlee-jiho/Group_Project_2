@@ -82,9 +82,9 @@ colnames(data) <- c("Country", "Region", "Happiness Score","Happiness Rank","Eco
 ```
 
 ```{r}
-colnames(data)
 head(data)
 ```
+
 ```{r}
 data <- read_excel("WHR_2015.xlsx", col_names = TRUE)
 data$`Economy (GDP per Capita)` <- as.factor(data$`Economy (GDP per Capita)`)
@@ -93,13 +93,6 @@ data$`Economy (GDP per Capita)` <- as.factor(data$`Economy (GDP per Capita)`)
 
 
 ```{r}
-library(readxl)
-library(dplyr)
-
-data <- read_excel("WHR_2015.xlsx")
-
-print(colnames(data))
-
 summary_stats <- data %>%
   summarize(
     Mean = mean(`Happiness Score`, na.rm = TRUE),  
