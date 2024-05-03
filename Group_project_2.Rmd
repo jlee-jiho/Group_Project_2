@@ -78,7 +78,11 @@ colnames(data)
 ```
 
 ```{r}
-colnames(data) <- c("Country", "Region", "Happiness Score","Happiness Rank","Economy (GDP per Capita","Health (Life Expectancy)", "Freedom", "Trust (Government Corruption)", "Family", "Generosity", "Dystopia Residual", "Standard Error") 
+colnames(data) <- c("Country", "Region", "Happiness Score",
+                    "Happiness Rank","Economy (GDP per Capita",
+                    "Health (Life Expectancy)", "Freedom", 
+                    "Trust (Government Corruption)", "Family", "Generosity", 
+                    "Dystopia Residual", "Standard Error") 
 ```
 
 ```{r}
