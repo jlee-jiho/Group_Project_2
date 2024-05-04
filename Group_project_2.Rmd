@@ -63,17 +63,11 @@ suppressPackageStartupMessages(library(boot))
 ```{r}
 library(readxl)
 library(dplyr)
-```
+library(ggplot2)
+library(tidyr)
 
+data <- read_excel("WHR_2015.xlsx")
 
-```{r}
-library(dplyr)
-data <- read_excel("WHR_2015.xlsx", col_names = TRUE)
-data <- data %>%
-  rename(
-    HappinessScore = `Happiness Score`,
-    GDPPerCapita = `Economy (GDP per Capita)`, 
-  )
 colnames(data)
 ```
 
@@ -86,37 +80,223 @@ colnames(data) <- c("Country", "Region", "Happiness Score",
 ```
 
 ```{r}
+str(data)
 head(data)
+tail(data)
 ```
 
-```{r}
-data <- read_excel("WHR_2015.xlsx", col_names = TRUE)
-data$`Economy (GDP per Capita)` <- as.factor(data$`Economy (GDP per Capita)`)
-```
-
-
-
-```{r}
-summary_stats <- data %>%
-  summarize(
-    Mean = mean(`Happiness Score`, na.rm = TRUE),  
-    Median = median(`Happiness Score`, na.rm = TRUE),  
-    Standard_Deviation = sd(`Happiness Score`, na.rm = TRUE),
-    Minimum = min(`Happiness Score`, na.rm = TRUE),
-    Maximum = max(`Happiness Score`, na.rm = TRUE)
-  )
-
-print(summary_stats)
-
-```
-
-
+*Center
 ```{r}
 data %>%
   summarize(center = median(`Happiness Score`, na.rm = TRUE))
 ```
 
+```{r}
+data %>%
+  summarise(mean_happiness_score = mean(`Happiness Score`, na.rm = TRUE))
+```
+
+```{r}
+data <- read_excel("WHR_2015.xlsx")
+
+medians <- sapply(data[c('Economy (GDP per Capita)', 'Family', 'Health (Life Expectancy)', 
+                         'Trust (Government Corruption)', 'Generosity')], median, na.rm = TRUE)
+
+print(medians)
+```
+
+```{r fig.width=10, fig.height=6}
+library(readxl)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+happiness_data <- read_excel("WHR_2015.xlsx")
+```
+
+```{r}
+happiness_long <- happiness_data %>%
+  pivot_longer(
+    cols = c(`Economy (GDP per Capita)`, Family, `Health (Life Expectancy)`, `Trust (Government Corruption)`, Generosity),
+    names_to = "Variable",
+    values_to = "Value"
+  )
+```
+
+```{r}
+ggplot(happiness_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_boxplot() +
+  labs(title = "Impact of Various Factors on Happiness Score",
+       x = "Factors Influencing Happiness",
+       y = "Happiness Score") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 8, hjust = 0.65),  
+        legend.position = "none")  
+```
+* The boxplot for the economy shows a high median,but family has the highest. 
+
+```{r}
+ggplot(happiness_long, aes(x = Variable, y = Value, fill = Variable)) +
+  geom_violin() +
+  labs(title = "Impact of Various Factors on Happiness Score",
+       x = "Factors",
+       y = "Happiness Score") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 10, hjust = 0.65, vjust = 1),  
+        legend.position = "none")  
+```
+
+```{r}
+data <- read_excel("WHR_2015.xlsx")
+
+data_long <- pivot_longer(data, cols = c('Economy (GDP per Capita)', 'Family', 
+                                         'Health (Life Expectancy)', 'Trust (Government Corruption)', 
+                                         'Generosity'), names_to = "variable", values_to = "value")
+
+ggplot(data_long, aes(x = variable, y = value, fill = variable)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_violin(alpha = 0.3, color = "black", adjust = 1.5) +
+  labs(title = "Impact of Various Factors on Happiness Score", 
+       x = "Factors", 
+       y = "Values") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) 
+
+```
+
+* Family has the highest median of  1.029510  and Economy had 0.910245. Both are located in the high portion compared to other factors.  
 
 
 
+```{r}
+library(reshape2)
+data_selected <- data %>%
+  select(`Happiness Score`, `Economy (GDP per Capita)`, Family, `Trust (Government Corruption)`, Generosity)
+cor_matrix <- cor(data_selected, use = "complete.obs")
+```
+
+```{r}
+cor_data <- melt(cor_matrix)
+
+heatmap_plot <- ggplot(cor_data, aes(Var1, Var2, fill = value)) +
+  geom_tile(color = "white") +  
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0, limit = c(-1, 1)) +
+  theme_minimal() +  
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),  
+        axis.title = element_blank()) +  
+  labs(fill = "Correlation")  
+
+print(heatmap_plot)
+```
+* Red shows the strongest positive correlation, blue shows the strongest negative correlation, and white shows no relationship close to 0. 
+
+* Most Influential: Economy (GDP per Capita), closely followed by Family and Health.
+* Moderately Influential: Trust (Government Corruption).
+* Least Influential: Generosity.
+
+
+
+```{r}
+library(corrplot)
+
+selected_data <- data %>%
+  select(Happiness_Score = `Happiness Score`, Family, Health = `Health (Life Expectancy)`, 
+         Trust = `Trust (Government Corruption)`, Generosity, Economics = `Economy (GDP per Capita)`)
+
+cor_matrix <- cor(selected_data, use = "complete.obs")
+
+par(mar = c(5, 5, 5, 5))  
+
+corrplot(cor_matrix, method = "color", type = "upper", order = "hclust",
+         tl.col = "black", tl.srt = 30, addCoef.col = "black", 
+         tl.cex = 0.8)  
+```
+* Happiness Score and Economics: Correlation coefficient 0.78
+* Happiness Score and Health: Correlation coefficient 0.72
+* Happiness Score and Family: Correlation coefficient 0.74
+* Happiness Score and Trust: Correlation coefficient 0.4
+* Happiness Score and Generosity: Correlation coefficient 0.18
+
+
+```{r}
+library(readxl)
+library(ggplot2)
+
+
+data <- read_excel("WHR_2015.xlsx")
+
+
+data <- data[, c("Economy (GDP per Capita)", "Family", "Health (Life Expectancy)", "Trust (Government Corruption)", "Generosity", "Happiness Score")]
+
+
+data <- na.omit(data)
+
+
+ggplot(data, aes(x = `Economy (GDP per Capita)`, y = `Happiness Score`)) +
+  geom_bin2d() +
+  scale_fill_gradient(low = "white", high = "blue") +
+  labs(title = "Relationship between Economy (GDP per Capita) and Happiness Score")
+
+```
+
+
+```{r}
+ggplot(data, aes(x = Family, y = `Happiness Score`)) +
+  geom_bin2d() +
+  scale_fill_gradient(low = "white", high = "blue") +
+  labs(title = "Relationship between Family and Happiness Score")
+```
+
+```{r}
+ggplot(data, aes(x = `Health (Life Expectancy)`, y = `Happiness Score`)) +
+  geom_bin2d() +
+  scale_fill_gradient(low = "white", high = "blue") +
+  labs(title = "Relationship between Health (Life Expectancy) and Happiness Score")
+
+```
+
+```{r}
+ggplot(data, aes(x = `Trust (Government Corruption)`, y = `Happiness Score`)) +
+  geom_bin2d() +
+  scale_fill_gradient(low = "white", high = "blue") +
+  labs(title = "Relationship between Trust (Government Corruption) and Happiness Score")
+```
+
+```{r}
+ggplot(data, aes(x = Generosity, y = `Happiness Score`)) +
+  geom_bin2d() +
+  scale_fill_gradient(low = "white", high = "blue") +
+  labs(title = "Relationship between Generosity and Happiness Score")
+```
+
+
+```{r}
+
+data <- read_excel("WHR_2015.xlsx")
+
+medians <- data %>%
+  summarise(
+    Economy = median(`Economy (GDP per Capita)`, na.rm = TRUE),
+    Family = median(Family, na.rm = TRUE),
+    Health = median(`Health (Life Expectancy)`, na.rm = TRUE),
+    Trust = median(`Trust (Government Corruption)`, na.rm = TRUE),
+    Generosity = median(Generosity, na.rm = TRUE)
+  )
+
+total <- sum(medians)
+medians <- medians / total * 100
+
+pie_data <- data.frame(
+  variable = names(medians),
+  value = as.numeric(medians),
+  label = sprintf("%.1f%%", as.numeric(medians))  
+)
+
+ggplot(pie_data, aes(x = "", y = value, fill = variable)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar(theta = "y") +
+  theme_void() +
+  labs(title = "Contribution of Various Factors to Happiness Score") +
+  geom_text(aes(label = label), position = position_stack(vjust = 0.5), size = 3) 
+```
+* The size of each sector is calculated based on the median value of each variable relative to the total sum of medians. Family variable occupies the largest sector, indicating it has the most significant impact on happiness scores, contributing 34.8% of the total.
 
