@@ -270,7 +270,6 @@ ggplot(data, aes(x = Generosity, y = `Happiness Score`)) +
 
 
 ```{r}
-
 data <- read_excel("WHR_2015.xlsx")
 
 medians <- data %>%
