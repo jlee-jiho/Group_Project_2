@@ -299,4 +299,3 @@ ggplot(pie_data, aes(x = "", y = value, fill = variable)) +
   geom_text(aes(label = label), position = position_stack(vjust = 0.5), size = 3) 
 ```
 * The size of each sector is calculated based on the median value of each variable relative to the total sum of medians. Family variable occupies the largest sector, indicating it has the most significant impact on happiness scores, contributing 34.8% of the total.
-
