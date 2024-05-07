@@ -115,7 +115,7 @@ print(colnames(data))
 #print(head(selected_data))
 ```
 
-
+[Module 2: Jiho Lee, Junhyung Kim]
 
 [ Module 4: Eugene Kim - Explanatory Data Analysis ] 
 
