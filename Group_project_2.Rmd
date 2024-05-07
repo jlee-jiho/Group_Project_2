@@ -100,6 +100,32 @@ print(colnames(data))
   )
 ```
 
+[Module 2: Junhyung Kim, Jiho Lee]
+
+```{r}
+data %>%
+ggplot() +
+geom_point(mapping = aes (x = Economy, y= Happiness_Score)) +
+labs(title = 
+       "Scatter Plot of Relationship Between Economy and Happiness Score",
+x = "Economy", y = "Happiness Score")
+```
+```{r}
+data %>%
+ggplot() +
+geom_point(mapping = aes (x = Social, y= Happiness_Score)) +
+labs(title = 
+       "Scatter Plot of Relationship Between Social and Happiness Score",
+x = "Social", y = "Happiness Score")
+```
+```{r}
+data %>%
+ggplot() +
+geom_point(mapping = aes (x = Health, y= Happiness_Score)) +
+labs(title = 
+       "Scatter Plot of Relationship Between Health and Happiness Score",
+x = "Health", y = "Happiness Score")
+```
 
 
 [ Module 4: Eugene Kim - Explanatory Data Analysis ] 
