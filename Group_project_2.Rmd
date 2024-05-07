@@ -77,30 +77,7 @@ data <- read_excel("WHR_2015.xlsx")
 
 colnames(data)
 ```
-
 ```{r}
-colnames(data) <- c("Country", "Region", "Happiness Score",
-                    "Happiness Rank","Economy",
-                    "Health", "Freedom", 
-                    "Trust", "Family", "Generosity", 
-                    "Dystopia Residual", "Standard Error") 
-
-
-```
-
-
-
-[ Module 4: Eugene Kim - Explanatory Data Analysis ] 
-
-```{r}
-str(data)
-head(data)
-tail(data)
-```
-```{r}
-if (!require(readxl)) {
-  install.packages("readxl")
-}
 library(readxl)
 
 data <- read_excel("WHR_2015.xlsx")
@@ -119,6 +96,35 @@ data <- data %>%
 print(colnames(data))
 
 ```
+
+```{r}
+  head(
+    select(data, Economy, Family, Health, Trust, Generosity, Happiness_Score)
+  )
+```
+
+
+```{r}
+# colnames(data) <- c("Country", "Region", "Happiness Score",
+#                    "Happiness Rank","Economy",
+#                    "Health", "Freedom", 
+#                    "Trust", "Family", "Generosity", 
+#                    "Dystopia Residual", "Standard Error") 
+
+#print(colnames(selected_data))
+#print(head(selected_data))
+```
+
+
+
+[ Module 4: Eugene Kim - Explanatory Data Analysis ] 
+
+```{r}
+str(data)
+head(data)
+tail(data)
+```
+
 ```{r}
 library(tidyr)
 library(dplyr) 
