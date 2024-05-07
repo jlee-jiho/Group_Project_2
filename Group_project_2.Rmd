@@ -60,6 +60,13 @@ suppressPackageStartupMessages(library(ggpubr))
 suppressPackageStartupMessages(library(boot))
 ```
 
+* Research Question/Hypothesis: 
+What variable in the world happiness report (family, health, trust, generosity, and economics) has the greatest effect on a nation’s happiness score? 
+
+* Hypothesis: Economics plays the largest role in a nation’s happiness score. 
+
+
+
 ```{r}
 library(readxl)
 library(dplyr)
@@ -77,26 +84,41 @@ colnames(data) <- c("Country", "Region", "Happiness Score",
                     "Health", "Freedom", 
                     "Trust", "Family", "Generosity", 
                     "Dystopia Residual", "Standard Error") 
+
+
 ```
+
+
+
+[ Module 4: Eugene Kim - Explanatory Data Analysis ] 
 
 ```{r}
 str(data)
 head(data)
 tail(data)
 ```
-
-*Center
 ```{r}
-data %>%
-  summarize(center = median(`Happiness Score`, na.rm = TRUE))
+if (!require(readxl)) {
+  install.packages("readxl")
+}
+library(readxl)
+
+data <- read_excel("WHR_2015.xlsx")
+
+print(colnames(data))
+
+data <- data %>%
+  rename(
+    Economy = `Economy (GDP per Capita)`,  
+    Family = 'Family',                      
+    Health = `Health (Life Expectancy)`,
+    Trust = `Trust (Government Corruption)`,  
+    Generosity = 'Generosity', 
+    Happiness_Score = `Happiness Score`
+  )
+print(colnames(data))
+
 ```
-
-```{r}
-data %>%
-  summarise(mean_happiness_score = mean(`Happiness Score`, na.rm = TRUE))
-```
-
-
 ```{r}
 library(tidyr)
 library(dplyr) 
@@ -142,40 +164,10 @@ ggplot(happiness_long, aes(x = Variable, y = Value, fill = Variable)) +
 
 
 
-```{r}
-cor_data <- melt(cor_matrix)
-
-heatmap_plot <- ggplot(cor_data, aes(Var1, Var2, fill = value)) +
-  geom_tile(color = "white") +  
-  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0, limit = c(-1, 1)) +
-  theme_minimal() +  
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),  
-        axis.title = element_blank()) +  
-  labs(fill = "Correlation")  
-
-print(heatmap_plot)
-```
-* Red shows the strongest positive correlation, blue shows the strongest negative correlation, and white shows no relationship close to 0. 
-
-* Most Influential: Economy (GDP per Capita), closely followed by Family and Health.
-* Moderately Influential: Trust (Government Corruption).
-* Least Influential: Generosity.
 
 
-```{r}
-data <- read_excel("WHR_2015.xlsx")
 
-pie_data <- data.frame(
-  variable = names(medians),
-  value = as.numeric(medians),
-  label = sprintf("%.1f%%", as.numeric(medians))  
-)
 
-ggplot(pie_data, aes(x = "", y = value, fill = variable)) +
-  geom_bar(stat = "identity", width = 1) +
-  coord_polar(theta = "y") +
-  theme_void() +
-  labs(title = "Contribution of Various Factors to Happiness Score") +
-  geom_text(aes(label = label), position = position_stack(vjust = 0.5), size = 3) 
-```
-* The size of each sector is calculated based on the median value of each variable relative to the total sum of medians. Family variable occupies the largest sector, indicating it has the most significant impact on happiness scores, contributing 34.8% of the total.
+
+
+
