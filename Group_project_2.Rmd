@@ -64,33 +64,31 @@ What variable in the world happiness report (family, health, trust, generosity, 
 
 * Hypothesis: Economics plays the largest role in a nation’s happiness score. 
 
-
-
 ```{r}
 library(readxl)
 library(dplyr)
 library(ggplot2)
 library(tidyr)
 
-data <- read_excel("WHR_2015.xlsx")
+data <- read_excel("2019.xls")
 
 colnames(data)
 ```
 ```{r}
 library(readxl)
 
-data <- read_excel("WHR_2015.xlsx")
+data <- read_excel("2019.xls")
 
 print(colnames(data))
 
 data <- data %>%
   rename(
-    Economy = `Economy (GDP per Capita)`,  
-    Family = 'Family',                      
-    Health = `Health (Life Expectancy)`,
-    Trust = `Trust (Government Corruption)`,  
-    Generosity = 'Generosity', 
-    Happiness_Score = `Happiness Score`
+    Economy = `GDP per capita`,  
+    Social = 'Social support',                      
+    Health = `Healthy life expectancy`,
+    Freedom = `Freedom to make life choices`,  
+    Corruption = 'Perceptions of corruption', 
+    Happiness_Score = `Score`
   )
 print(colnames(data))
 
@@ -98,74 +96,27 @@ print(colnames(data))
 
 ```{r}
   head(
-    select(data, Economy, Family, Health, Trust, Generosity, Happiness_Score)
+    select(data, Economy, Social, Health, Freedom, Corruption, Happiness_Score)
   )
 ```
 
 
-```{r}
-# colnames(data) <- c("Country", "Region", "Happiness Score",
-#                    "Happiness Rank","Economy",
-#                    "Health", "Freedom", 
-#                    "Trust", "Family", "Generosity", 
-#                    "Dystopia Residual", "Standard Error") 
-
-#print(colnames(selected_data))
-#print(head(selected_data))
-```
-
-[Module 2: Jiho Lee, Junhyung Kim]
 
 [ Module 4: Eugene Kim - Explanatory Data Analysis ] 
 
 ```{r}
 str(data)
-head(data)
+head(
+    select(data, Economy, Social, Health, Freedom, Corruption, Happiness_Score)
+  )
 tail(data)
 ```
 
-```{r}
-library(tidyr)
-library(dplyr) 
 
-happiness_long <- data %>%
-  pivot_longer(
-    cols = c(`Economy`, `Family`, `Health`, `Trust`, `Generosity`),
-    names_to = "Variable",
-    values_to = "Value"
-  )
 
-```
 
-```{r}
-library(ggplot2)
 
-ggplot(happiness_long, aes(x = Variable, y = Value, fill = Variable)) +
-  geom_boxplot(alpha = 0.6) +  
-  labs(title = "Impact of Various Factors on Happiness Score",
-       subtitle = "Boxplot representation of various factors influencing happiness",
-       x = "Factors Influencing Happiness",
-       y = "Happiness Score") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 10, hjust = 1),  
-        legend.position = "none")  
 
-```
-
-```{r}
-library(ggplot2)
-
-ggplot(happiness_long, aes(x = Variable, y = Value, fill = Variable)) +
-  geom_violin(trim = TRUE, alpha = 0.6) +  
-  labs(title = "Impact of Various Factors on Happiness Score",
-       subtitle = "Violin plots representing distribution of happiness factors",
-       x = "Factors",
-       y = "Happiness Score") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 10, hjust = 0.65, vjust = 1),  
-        legend.position = "none")  
-
-```
 
 
 
