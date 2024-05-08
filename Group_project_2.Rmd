@@ -127,6 +127,25 @@ labs(title =
 x = "Health", y = "Happiness Score")
 ```
 
+```{r}
+data %>%
+ggplot() +
+geom_point(mapping = aes (x = Freedom, y= Happiness_Score)) +
+labs(title = 
+       "Scatter Plot of Relationship Between
+        Freedom and Happiness Score",
+x = "Freedom", y = "Happiness Score")
+```
+
+```{r}
+data %>%
+ggplot() +
+geom_point(mapping = aes (x = Corruption, y= Happiness_Score)) +
+labs(title = 
+       "Scatter Plot of Relationship Between 
+        Corruption and Happiness Score",
+x = "Corruption", y = "Happiness Score")
+```
 
 [ Module 4: Eugene Kim,  - Explanatory Data Analysis ] 
 
