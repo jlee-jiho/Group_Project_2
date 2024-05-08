@@ -79,6 +79,9 @@ library(readxl)
 
 data <- read_excel("2019.xls")
 
+
+data <- read_excel("2019.xls")
+
 print(colnames(data))
 
 data <- data %>%
@@ -99,6 +102,7 @@ print(colnames(data))
     select(data, Economy, Social, Health, Freedom, Corruption, Happiness_Score)
   )
 ```
+
 
 [Module 2: Junhyung Kim, Jiho Lee]
 
@@ -127,6 +131,26 @@ labs(title =
 x = "Health", y = "Happiness Score")
 ```
 
+
+```{r}
+data %>%
+ggplot() +
+geom_point(mapping = aes (x = Freedom, y= Happiness_Score)) +
+labs(title = 
+       "Scatter Plot of Relationship Between
+        Freedom and Happiness Score",
+x = "Freedom", y = "Happiness Score")
+```
+
+```{r}
+data %>%
+ggplot() +
+geom_point(mapping = aes (x = Corruption, y= Happiness_Score)) +
+labs(title = 
+       "Scatter Plot of Relationship Between 
+        Corruption and Happiness Score",
+x = "Corruption", y = "Happiness Score")
+```
 
 [ Module 4: Eugene Kim - Explanatory Data Analysis ] 
 
