@@ -74,6 +74,7 @@ data <- read_excel("2019.xls")
 
 colnames(data)
 ```
+
 ```{r}
 library(readxl)
 
@@ -168,20 +169,20 @@ data_long <- data %>%
 ggplot(data_long, aes(x = Variable, y = Score)) +
   geom_boxplot(width = 0.7) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(title = "Box Plot of Happiness Scores by Variable", x = "Variables Affecting Happiness Score", y = "Happiness Score")
+  labs(title = "Box Plot Each Variable", x = "Variables Affecting Happiness Score", y = "Values")
 ```
 
 
 * Distribution of the values:
-Corruption variable is narrowly distributed, mostly concentrated near the lower score values, showing a low happiness score in relation to perceived corruption.
+Corruption variable is narrowly distributed, mostly concentrated near the lower score values.
 
 Economy variable has a broader distribution with more variability in scores. 
 
 Freedom variable has a mid-range median and spread in values.
 
-Health variable shows higher median happiness scores, implying positive correlation between good health and higher happiness score.
+Health variable shows higher median happiness scores.
 
-Social variable has widest range of scores, indicating a varied impact of social factors on happiness. 
+Social variable has widest range of scores.
 
 * Outliers:
 Corruption: Features multiple outliers at the lower end, which might represent instances where perceived corruption is significantly impacting happiness.
@@ -189,29 +190,21 @@ Corruption: Features multiple outliers at the lower end, which might represent i
 Social have a few lower outliers. Economy, freedom and health do not show clear outliers in this plot. 
 
 * Inter-quartile Range (IQR):
-Corruption shows a very tight IQR, close to the lower score limits. Economy, Freedom, and Health have moderately sized IQRs. Social has the largest IQR, suggesting significant variability in how social factors affect happiness.
-
+Corruption shows a very tight IQR, close to the lower score limits. Economy, Freedom, and Health have moderately sized IQRs. Social has the largest IQR. 
 
 *Violin Plot
+
 ```{r}
 ggplot(data_long, aes(x = Variable, y = Score, fill = Variable)) +
   geom_violin(trim = TRUE) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(title = "Violin Plot of Happiness Scores by Variable", x = "Variables Affecting Happiness Score", y = "Happiness Score") +
+  labs(title = "Violin Plot of Each Variable", x = "Variables Affecting Happiness Score", y = "Values") +
   scale_fill_brewer(palette = "Pastel1")
 ```
 
 * The Social and Health variables seem to have the most highest positive impact on happiness scores. Both variables are located inthe upper range. 
 * Economy and Freedom shows less impact than the social and health variables. The variability in economic and freedom seems to impact the happiness score per situation.
 * Corruption has high negative impact on happiness score, as the values are concentrated at the lower end of the plot. 
-
-*Heatmap
-
-
-
-
-
-
-
+```
 
 
