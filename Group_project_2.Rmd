@@ -229,11 +229,6 @@ ggplot(data_long, aes(x = Variable, y = Score, fill = Variable)) +
   scale_fill_brewer(palette = "Pastel1")
 ```
 
-* The Social and Health variables seem to have the most highest positive impact on happiness scores. Both variables are located inthe upper range. 
-* Economy and Freedom shows less impact than the social and health variables. The variability in economic and freedom seems to impact the happiness score per situation.
-* Corruption has high negative impact on happiness score, as the values are concentrated at the lower end of the plot. 
-
-
 *Summary
 
 ```{r}
