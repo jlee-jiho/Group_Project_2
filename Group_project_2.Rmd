@@ -189,10 +189,106 @@ ggplot(data_long, aes(x = Variable, y = Score, fill = Variable)) +
 *Heatmap
 
 
+```{r}
+data %>%
+  pivot_longer(cols = Economy:Corruption, names_to = "Variable", values_to = "value") %>%
+  ggplot() +
+  geom_bin2d(mapping = aes(x = value, y = Happiness_Score)) +
+  labs(title = "HeatMap between Variables and Happiness Score", x= "Variables Affecting Happiness Score", y= "Happiness Score") +
+  facet_wrap(~ Variable, scales = "free_x")
+```
+
+
+*Histogram
 
 
 
+*Summary
 
+```{r}
+data_long_economy <- data_long %>%
+  filter(Variable == "Economy")
+```
+
+```{r}
+data_long_economy %>%
+  summarize(
+    mean= mean(Score),
+    median =median(Score),
+    sd=sd(Score),
+    iqr=IQR(Score),
+    min=min(Score),
+    max=max(Score)
+ )
+```
+
+```{r}
+data_long_social <- data_long %>%
+  filter(Variable == "Social")
+```
+
+```{r}
+data_long_social %>%
+  summarize(
+    mean= mean(Score),
+    median =median(Score),
+    sd=sd(Score),
+    iqr=IQR(Score),
+    min=min(Score),
+    max=max(Score)
+ )
+```
+
+```{r}
+data_long_health <- data_long %>%
+  filter(Variable == "Health")
+```
+
+```{r}
+data_long_health %>%
+  summarize(
+    mean= mean(Score),
+    median =median(Score),
+    sd=sd(Score),
+    iqr=IQR(Score),
+    min=min(Score),
+    max=max(Score)
+ )
+```
+
+```{r}
+data_long_freedom <- data_long %>%
+  filter(Variable == "Freedom")
+```
+
+```{r}
+data_long_freedom %>%
+  summarize(
+    mean= mean(Score),
+    median =median(Score),
+    sd=sd(Score),
+    iqr=IQR(Score),
+    min=min(Score),
+    max=max(Score)
+ )
+```
+
+```{r}
+data_long_corruption <- data_long %>%
+  filter(Variable == "Corruption")
+```
+
+```{r}
+data_long_corruption %>%
+  summarize(
+    mean= mean(Score),
+    median =median(Score),
+    sd=sd(Score),
+    iqr=IQR(Score),
+    min=min(Score),
+    max=max(Score)
+ )
+```
 
 
 
