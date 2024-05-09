@@ -195,10 +195,6 @@ labs(title = "HeatMap (Corruption and Happiness Score)",x= "Corruption",y= "Happ
  facet_wrap(~ Variable, scales = "free_x")
 ```
 
-
-
-
-[ Module 4: Eugene Kim,  - Explanatory Data Analysis ] 
 =======
 [ Module 4: Eugene Kim, Harold Lee  - Explanatory Data Analysis ] 
 
