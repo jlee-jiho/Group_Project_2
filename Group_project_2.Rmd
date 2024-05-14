@@ -218,36 +218,42 @@ labs(title = "HeatMap (Economy and Happiness Score)",x= "Economy",
 data %>%
 ggplot() +
 geom_bin2d(mapping = aes(x = Social, y = Happiness_Score)) +
-labs(title = "HeatMap (Social and Happiness Score)",x= "Social",y= "Happiness_Score")
+labs(title = "HeatMap (Social and Happiness Score)",x= "Social",
+     y= "Happiness_Score")
 ```
 
 ```{r}
 data %>%
 ggplot() +
 geom_bin2d(mapping = aes(x = Health, y = Happiness_Score)) +
-labs(title = "HeatMap (Health and Happiness Score)",x= "Health",y= "Happiness_Score")
+labs(title = "HeatMap (Health and Happiness Score)",x= "Health",
+     y= "Happiness_Score")
 ```
 
 ```{r}
 data %>%
 ggplot() +
 geom_bin2d(mapping = aes(x = Freedom, y = Happiness_Score)) +
-labs(title = "HeatMap (Freedom and Happiness Score)",x= "Freedom",y= "Happiness_Score")
+labs(title = "HeatMap (Freedom and Happiness Score)",x= "Freedom",
+     y= "Happiness_Score")
 ```
 
 ```{r}
 data %>%
 ggplot() +
 geom_bin2d(mapping = aes(x = Corruption, y = Happiness_Score)) +
-labs(title = "HeatMap (Corruption and Happiness Score)",x= "Corruption",y= "Happiness_Score")
+labs(title = "HeatMap (Corruption and Happiness Score)",x= "Corruption",
+     y= "Happiness_Score")
 ```
 
 ```{r}
  data %>%
- pivot_longer(cols = Economy:Corruption, names_to = "Variable", values_to = "value") %>%
+ pivot_longer(cols = Economy:Corruption, names_to = "Variable",
+              values_to = "value") %>%
  ggplot() +
  geom_bin2d(mapping = aes(x = value, y = Happiness_Score)) +
- labs(title = "HeatMap between Variables and Happiness Score", x= "Variables") +
+ labs(title = "HeatMap between Variables and Happiness Score",
+      x= "Variables") +
  facet_wrap(~ Variable, scales = "free_x")
 ```
 
@@ -257,9 +263,11 @@ labs(title = "HeatMap (Corruption and Happiness Score)",x= "Corruption",y= "Happ
 ```{r}
 str(data)
 head(
-    select(data, Economy, Social, Health, Freedom, Corruption, Happiness_Score)
+    select(data, Economy, Social, Health, Freedom, Corruption,
+           Happiness_Score)
   )
-tail(select(data, Economy, Social, Health, Freedom, Corruption, Happiness_Score)
+tail(select(data, Economy, Social, Health, Freedom, Corruption,
+            Happiness_Score)
   )
 ```
 
@@ -268,12 +276,14 @@ tail(select(data, Economy, Social, Health, Freedom, Corruption, Happiness_Score)
 *Box Plot
 ```{r}
 data_long <- data %>%
-  gather(key = "Variable", value = "Score", Economy, Social, Health, Freedom, Corruption) 
+  gather(key = "Variable", value = "Score", Economy, Social, Health,
+         Freedom, Corruption) 
 
 ggplot(data_long, aes(x = Variable, y = Score)) +
   geom_boxplot(width = 0.7) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(title = "Box Plot Each Variable", x = "Variables Affecting Happiness Score", y = "Values")
+  labs(title = "Box Plot Each Variable",
+       x = "Variables Affecting Happiness Score", y = "Values")
 ```
 
 *Violin Plot
@@ -281,7 +291,8 @@ ggplot(data_long, aes(x = Variable, y = Score)) +
 ggplot(data_long, aes(x = Variable, y = Score, fill = Variable)) +
   geom_violin(trim = TRUE) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(title = "Violin Plot of Each Variable", x = "Variables Affecting Happiness Score", y = "Values") +
+  labs(title = "Violin Plot of Each Variable",
+       x = "Variables Affecting Happiness Score", y = "Values") +
   scale_fill_brewer(palette = "Pastel1")
 ```
 
