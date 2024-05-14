@@ -358,3 +358,62 @@ data %>%
  )
 ```
 
+# [Module 5: Chun Jin Park - Modeling]. 
+ 
+#  linear model using Im
+```{r}
+model <- lm(Happiness_Score ~ Economy + Social + Health + Freedom + Generosity + Corruption, data = data)
+
+summary(model)
+```
+ 
+#  tidy to get the model coefficients
+```{r}
+coefficients <- tidy(model)
+print(coefficients)
+```
+ 
+#  glance to get the model's performance metrics
+```{r}
+performance <- glance(model)
+print(performance)
+```
+
+
+# Observed vs Predicted plot
+```{r}
+ggplot(data, aes(x = predict(model), y = Happiness_Score)) +
+  geom_point() +
+  geom_abline(intercept = 0, slope = 1, col = "red") +
+  labs(title = 
+         "Observed vs Predicted Happiness Score", 
+       x = "Predicted Happiness Score", 
+       y = "Observed Happiness Score")
+```
+
+# Residuals vs Predicted plot
+```{r}
+ggplot(data, aes(x = predict(model), y = residuals(model))) +
+  geom_point() +
+  geom_hline(yintercept = 0, col = "red") +
+  labs(title = "Residuals vs Predicted Happiness Score",
+       x = "Predicted Happiness Score", 
+       y = "Residuals")
+```
+
+# Q-Q plot
+```{r}
+qqnorm(residuals(model))
+qqline(residuals(model), col = "red")
+```
+
+
+
+
+
+
+
+
+
+
+
