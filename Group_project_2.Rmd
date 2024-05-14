@@ -210,7 +210,8 @@ data %>%
 data %>%
 ggplot() +
 geom_bin2d(mapping = aes(x = Economy, y = Happiness_Score)) +
-labs(title = "HeatMap (Economy and Happiness Score)",x= "Economy",y= "Happiness_Score")
+labs(title = "HeatMap (Economy and Happiness Score)",x= "Economy",
+     y= "Happiness_Score")
 ```
 
 ```{r}
