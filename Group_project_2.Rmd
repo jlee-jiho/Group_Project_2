@@ -2,27 +2,30 @@
 title: "Final Project (Group 2)"
 author: "Group 2"
 date: "`r Sys.Date()`"
-documentclass: article
-geometry: margin=1in
-fontsize: 11pt
 output:
   pdf_document:
-    toc: false
+    toc: no
     df_print: kable
-    fig_caption: false
-    number_sections: false
+    fig_caption: no
+    number_sections: no
     dev: pdf
     highlight: tango
   html_document:
     theme: default
-    self_contained: true
-    toc: false
+    self_contained: yes
+    toc: no
     df_print: kable
-    fig_caption: false
-    number_sections: false
-    smart: true
+    fig_caption: no
+    number_sections: no
+    smart: yes
     dev: svg
+  word_document:
+    toc: no
+geometry: margin=1in
+fontsize: 11pt
+documentclass: article
 ---
+
 ```{r setup, include = FALSE}
 # DO NOT ALTER THIS CHUNK
 knitr::opts_chunk$set(
@@ -59,10 +62,9 @@ suppressPackageStartupMessages(library(ggpubr))
 suppressPackageStartupMessages(library(boot))
 ```
 
-* Research Question/Hypothesis: 
-What variable in the world happiness report (family, health, trust, generosity, and economics) has the greatest effect on a nation’s happiness score? 
+-   Research Question/Hypothesis: What variable in the world happiness report (family, health, trust, generosity, and economics) has the greatest effect on a nation's happiness score?
 
-* Hypothesis: Economics plays the largest role in a nation’s happiness score. 
+-   Hypothesis: Economics plays the largest role in a nation's happiness score.
 
 ```{r}
 library(readxl)
@@ -103,7 +105,7 @@ print(colnames(data))
 
 [Module 2: Junhyung Kim, Jiho Lee]
 
-*Scatter Plot
+\*Scatter Plot
 
 ```{r}
 data %>%
@@ -162,7 +164,6 @@ data %>%
        Economy vs Happiness Score")
 ```
 
-
 ```{r}
 data %>%
   ggplot() +
@@ -171,7 +172,6 @@ data %>%
        title="Trend line relationship between 
        Social vs Happiness Score")
 ```
-
 
 ```{r}
 data %>%
@@ -182,7 +182,6 @@ data %>%
        Health vs Happiness Score")
 ```
 
-
 ```{r}
 data %>%
   ggplot() +
@@ -191,7 +190,6 @@ data %>%
        title="Trend line relationship between 
        Freedom vs Happiness Score")
 ```
-
 
 ```{r}
 data %>%
@@ -202,9 +200,7 @@ data %>%
        Corruption vs Happiness Score")
 ```
 
-
-
-*HeatMap
+\*HeatMap
 
 ```{r}
 data %>%
@@ -248,8 +244,8 @@ labs(title = "HeatMap (Corruption and Happiness Score)",x= "Corruption",
 
 ```{r}
  data %>%
- pivot_longer(cols = Economy:Corruption, names_to = "Variable",
-              values_to = "value") %>%
+ pivot_longer(cols = Economy | Social | Health | Freedom |Corruption, 
+              names_to = "Variable", values_to = "value") %>%
  ggplot() +
  geom_bin2d(mapping = aes(x = value, y = Happiness_Score)) +
  labs(title = "HeatMap between Variables and Happiness Score",
@@ -257,8 +253,7 @@ labs(title = "HeatMap (Corruption and Happiness Score)",x= "Corruption",
  facet_wrap(~ Variable, scales = "free_x")
 ```
 
-=======
-[ Module 4: Eugene Kim, Harold Lee  - Explanatory Data Analysis ] 
+======= [ Module 4: Eugene Kim, Harold Lee - Explanatory Data Analysis ]
 
 ```{r}
 str(data)
@@ -271,9 +266,10 @@ tail(select(data, Economy, Social, Health, Freedom, Corruption,
   )
 ```
 
-*Summary statistics
+\*Summary statistics
 
-*Box Plot
+\*Box Plot
+
 ```{r}
 data_long <- data %>%
   gather(key = "Variable", value = "Score", Economy, Social, Health,
@@ -286,7 +282,8 @@ ggplot(data_long, aes(x = Variable, y = Score)) +
        x = "Variables Affecting Happiness Score", y = "Values")
 ```
 
-*Violin Plot
+\*Violin Plot
+
 ```{r}
 ggplot(data_long, aes(x = Variable, y = Score, fill = Variable)) +
   geom_violin(trim = TRUE) + 
@@ -296,7 +293,7 @@ ggplot(data_long, aes(x = Variable, y = Score, fill = Variable)) +
   scale_fill_brewer(palette = "Pastel1")
 ```
 
-*Summary
+\*Summary
 
 ```{r}
 data %>%
@@ -358,29 +355,32 @@ data %>%
  )
 ```
 
-# [Module 5: Chun Jin Park - Modeling]. 
- 
-#  linear model using Im
+# [Module 5: Chun Jin Park - Modeling].
+
+# linear model using Im
+
 ```{r}
 model <- lm(Happiness_Score ~ Economy + Social + Health + Freedom + Generosity + Corruption, data = data)
 
 summary(model)
 ```
- 
-#  tidy to get the model coefficients
+
+# tidy to get the model coefficients
+
 ```{r}
 coefficients <- tidy(model)
 print(coefficients)
 ```
- 
-#  glance to get the model's performance metrics
+
+# glance to get the model's performance metrics
+
 ```{r}
 performance <- glance(model)
 print(performance)
 ```
 
-
 # Observed vs Predicted plot
+
 ```{r}
 ggplot(data, aes(x = predict(model), y = Happiness_Score)) +
   geom_point() +
@@ -392,6 +392,7 @@ ggplot(data, aes(x = predict(model), y = Happiness_Score)) +
 ```
 
 # Residuals vs Predicted plot
+
 ```{r}
 ggplot(data, aes(x = predict(model), y = residuals(model))) +
   geom_point() +
@@ -402,18 +403,8 @@ ggplot(data, aes(x = predict(model), y = residuals(model))) +
 ```
 
 # Q-Q plot
+
 ```{r}
 qqnorm(residuals(model))
 qqline(residuals(model), col = "red")
 ```
-
-
-
-
-
-
-
-
-
-
-
