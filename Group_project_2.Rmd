@@ -407,13 +407,57 @@ qqnorm(residuals(model))
 qqline(residuals(model), col = "red")
 ```
 
+=======
+[ Module 6: SeNa Julsdorf, Hyeongseok Sim] 
+
+```{r}
+null_distribution_correlation <- data %>%
+  specify(Happiness_Score ~ Social) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 10000, type = "permute") %>%
+  calculate(stat = "correlation")
+```
+
+```{r}
+happiness_obs_stat <- data %>%
+  specify(Happiness_Score ~ Social) %>%
+  calculate(stat = "correlation")
+```
+
+```{r}
+p_value <- null_distribution_correlation %>%
+  get_p_value(obs_stat = happiness_obs_stat, direction = "both")
+```
+```{r}
+print(p_value)
+```
+```{r}
+visualize(null_distribution_correlation) +
+  shade_p_value(obs_stat = happiness_obs_stat, direction = "two_sided") +
+    labs(title = "Null Distribution of Happiness Score", x = "Correlation", y = "Count")
+```
+
+```{r}
+null_distribution_correlation %>%
+  ggplot +
+  geom_density(mapping = aes(x = stat), adjust = 5) +
+  labs(title = "Null Hypothesis Density Plot", x = "stats", y = "density")
+```
 
 
+```{r}
+null_distribution_correlation %>%
+  ggplot() +
+  geom_histogram(mapping = aes(x = stat), bins = 10) +
+  geom_density(mapping = aes(x = stat), adjust = 10) +
+  labs(title = "Null Hypothesis Density Plot", x = "stats", y = "density")
+```
 
-
-
-
-
-
-
-
+```{r}
+null_distribution_correlation %>%
+ggplot()+
+geom_histogram(mapping = aes(x = stat, y = ..density..), bins = 10) +
+geom_density(mapping = aes(x = stat), adjust = 5) +
+labs(title = "Density and Null Hypothesis PMF Plot",
+x = "Stat", y = "Density")
+```
