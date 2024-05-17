@@ -461,3 +461,37 @@ geom_density(mapping = aes(x = stat), adjust = 5) +
 labs(title = "Density and Null Hypothesis PMF Plot",
 x = "Stat", y = "Density")
 ```
+=======
+[ Module 7: Jeonghwa Cho]
+
+
+
+```{r}
+bootstraps_distribution_correlation <- data %>%
+specify(Happiness_Score ~ Social) %>%
+generate( reps = 10000, type = "bootstrap") %>%
+calculate(stat = "correlation")
+```
+
+```{r}
+bootstrap_ci <- bootstraps_distribution_correlation %>%
+get_confidence_interval()
+
+```
+
+```{r}
+bootstrap_ci
+
+```
+
+```{r}
+bootstraps_distribution_correlation %>%
+visualize()+
+shade_confidence_interval(bootstrap_ci)+
+ggtitle("Bootstrap Distribution")+
+xlab("Correlation")+
+ylab("count")
+
+```
+
+
