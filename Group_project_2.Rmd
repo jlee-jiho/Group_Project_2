@@ -57,7 +57,11 @@ suppressPackageStartupMessages(library(formattable))
 suppressPackageStartupMessages(library(plotrix))
 suppressPackageStartupMessages(library(ggpubr))
 suppressPackageStartupMessages(library(boot))
+suppressPackageStartupMessages(library(infer))
+# Load Cohen's d bootstrap helper functions
+load("bootstrap_cohens_d.RData")
 ```
+
 
 * Research Question/Hypothesis: 
 What variable in the world happiness report (family, health, trust, generosity, and economics) has the greatest effect on a nation’s happiness score? 
@@ -73,6 +77,7 @@ library(tidyr)
 data <- read_excel("2019.xls")
 
 colnames(data)
+
 ```
 
 ```{r}
@@ -461,6 +466,11 @@ geom_density(mapping = aes(x = stat), adjust = 5) +
 labs(title = "Density and Null Hypothesis PMF Plot",
 x = "Stat", y = "Density")
 ```
+
+
+
+
+
 =======
 [ Module 7: Jeonghwa Cho]
 
@@ -494,4 +504,20 @@ ylab("count")
 
 ```
 
+```{r}
+bootstrap_results <- cohens_d_bootstrap(
+data = data_long,
+model = Happiness_Score ~ Variable)
+
+```
+
+```{r}
+bootstrap_report(bootstrap_results)
+
+```
+
+```{r}
+plot_ci(bootstrap_results)
+
+```
 
