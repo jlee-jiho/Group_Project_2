@@ -374,7 +374,8 @@ data_E <- data %>%
   summarize(
     mean= mean(Economy),
     median = median(Economy),
-    max = max(Economy)
+    max = max(Economy),
+    iqr = IQR(Economy)
  )
 ```
 
@@ -383,7 +384,8 @@ data_S <- data %>%
   summarize(
     mean= mean(Social),
     median = median(Social),
-    max = max(Social)
+    max = max(Social),
+    iqr = IQR(Social)
  )
 ```
 
@@ -392,7 +394,8 @@ data_H <- data %>%
   summarize(
     mean= mean(Health),
     median = median(Health),
-    max = max(Health)
+    max = max(Health),
+    iqr = IQR(Health)
  )
 ```
 
@@ -401,7 +404,8 @@ data_F <- data %>%
   summarize(
     mean= mean(Freedom),
     median = median(Freedom),
-    max = max(Freedom)
+    max = max(Freedom),
+    iqr = IQR(Freedom)
  )
 ```
 
@@ -410,20 +414,20 @@ data_C <- data %>%
   summarize(
     mean= mean(Corruption),
     median = median(Corruption),
-    max = max(Corruption)
+    max = max(Corruption),
+    iqr = IQR(Corruption)
  )
 ```
 
 ```{r}
 combined_data <- rbind(data_E, data_S, data_H, data_F, data_C)
 combined_data$c <- c('Economy', 'Social', 'Health', 'Freedom', 'Corruption')
-colnames(combined_data) <- c("Mean", "Median", "Max", "Variables")
-group_data <- group_by(combined_data, Variables)
+colnames(combined_data) <- c("Mean", "Median", "Max", "IQR", "Variables")
 ```
 
 ```{r}
-group_data2 <- group_data %>%
- pivot_longer(cols = Mean:Max, names_to = "Summary_Variable" , values_to = "Value")
+group_data2 <- combined_data %>%
+ pivot_longer(cols = Mean:IQR, names_to = "Summary_Variable" , values_to = "Value")
 ```
 
 
