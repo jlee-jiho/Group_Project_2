@@ -266,8 +266,9 @@ labs(title = "HeatMap (Corruption and Happiness Score)",x= "Corruption",
 
 ======= [ Module 4: Eugene Kim, Harold Lee - Explanatory Data Analysis ]
 
+
 ```{r}
-str(data)
+str(data, vec.len = 2)
 head(
     select(data, Economy, Social, Health, Freedom, Corruption,
            Happiness_Score)
