@@ -60,9 +60,18 @@ suppressPackageStartupMessages(library(formattable))
 suppressPackageStartupMessages(library(plotrix))
 suppressPackageStartupMessages(library(ggpubr))
 suppressPackageStartupMessages(library(boot))
+suppressPackageStartupMessages(library(infer))
+# Load Cohen's d bootstrap helper functions
+load("bootstrap_cohens_d.RData")
 ```
 
+<<<<<<< HEAD
 -   Research Question/Hypothesis: What variable in the world happiness report (family, health, trust, generosity, and economics) has the greatest effect on a nation's happiness score?
+=======
+
+* Research Question/Hypothesis: 
+What variable in the world happiness report (family, health, trust, generosity, and economics) has the greatest effect on a nation’s happiness score? 
+>>>>>>> 81e6af9ac23978bbafb85c9fa12c41d73c572ee5
 
 -   Hypothesis: Economics plays the largest role in a nation's happiness score.
 
@@ -75,6 +84,7 @@ library(tidyr)
 data <- read_excel("2019.xls")
 
 colnames(data)
+
 ```
 
 ```{r}
@@ -476,3 +486,115 @@ ggplot(data, aes(x = predict(model), y = residuals(model))) +
 qqnorm(residuals(model))
 qqline(residuals(model), col = "red")
 ```
+<<<<<<< HEAD
+=======
+
+=======
+[ Module 6: SeNa Julsdorf, Hyeongseok Sim] 
+
+```{r}
+null_distribution_correlation <- data %>%
+  specify(Happiness_Score ~ Social) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 10000, type = "permute") %>%
+  calculate(stat = "correlation")
+```
+
+```{r}
+happiness_obs_stat <- data %>%
+  specify(Happiness_Score ~ Social) %>%
+  calculate(stat = "correlation")
+```
+
+```{r}
+p_value <- null_distribution_correlation %>%
+  get_p_value(obs_stat = happiness_obs_stat, direction = "both")
+```
+```{r}
+print(p_value)
+```
+```{r}
+visualize(null_distribution_correlation) +
+  shade_p_value(obs_stat = happiness_obs_stat, direction = "two_sided") +
+    labs(title = "Null Distribution of Happiness Score", x = "Correlation", y = "Count")
+```
+
+```{r}
+null_distribution_correlation %>%
+  ggplot +
+  geom_density(mapping = aes(x = stat), adjust = 5) +
+  labs(title = "Null Hypothesis Density Plot", x = "stats", y = "density")
+```
+
+
+```{r}
+null_distribution_correlation %>%
+  ggplot() +
+  geom_histogram(mapping = aes(x = stat), bins = 10) +
+  geom_density(mapping = aes(x = stat), adjust = 10) +
+  labs(title = "Null Hypothesis Density Plot", x = "stats", y = "density")
+```
+
+```{r}
+null_distribution_correlation %>%
+ggplot()+
+geom_histogram(mapping = aes(x = stat, y = ..density..), bins = 10) +
+geom_density(mapping = aes(x = stat), adjust = 5) +
+labs(title = "Density and Null Hypothesis PMF Plot",
+x = "Stat", y = "Density")
+```
+
+
+
+
+
+=======
+[ Module 7: Jeonghwa Cho]
+
+
+
+```{r}
+bootstraps_distribution_correlation <- data %>%
+specify(Happiness_Score ~ Social) %>%
+generate( reps = 10000, type = "bootstrap") %>%
+calculate(stat = "correlation")
+```
+
+```{r}
+bootstrap_ci <- bootstraps_distribution_correlation %>%
+get_confidence_interval()
+
+```
+
+```{r}
+bootstrap_ci
+
+```
+
+```{r}
+bootstraps_distribution_correlation %>%
+visualize()+
+shade_confidence_interval(bootstrap_ci)+
+ggtitle("Bootstrap Distribution")+
+xlab("Correlation")+
+ylab("count")
+
+```
+
+```{r}
+bootstrap_results <- cohens_d_bootstrap(
+data = data_long,
+model = Happiness_Score ~ Variable)
+
+```
+
+```{r}
+bootstrap_report(bootstrap_results)
+
+```
+
+```{r}
+plot_ci(bootstrap_results)
+
+```
+
