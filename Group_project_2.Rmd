@@ -427,7 +427,8 @@ colnames(combined_data) <- c("Mean", "Median", "Max", "IQR", "Variables")
 
 ```{r}
 group_data2 <- combined_data %>%
- pivot_longer(cols = Mean:IQR, names_to = "Summary_Variable" , values_to = "Value")
+ pivot_longer(cols = Mean:IQR, names_to = "Summary_Variable" ,
+              values_to = "Value")
 ```
 
 
@@ -443,7 +444,8 @@ ggplot(data=group_data2, aes(x=Variables, y=Value, group=Summary_Variable)) +
 # linear model using Im
 
 ```{r}
-model <- lm(Happiness_Score ~ Economy + Social + Health + Freedom + Generosity + Corruption, data = data)
+model <- lm(Happiness_Score ~ Economy + Social + Health + Freedom +
+              Generosity + Corruption, data = data)
 
 summary(model)
 ```
@@ -521,7 +523,8 @@ print(p_value)
 ```{r}
 visualize(null_distribution_correlation) +
   shade_p_value(obs_stat = happiness_obs_stat, direction = "two_sided") +
-    labs(title = "Null Distribution of Happiness Score", x = "Correlation", y = "Count")
+    labs(title = "Null Distribution of Happiness Score",
+         x = "Correlation", y = "Count")
 ```
 
 ```{r}
