@@ -117,27 +117,30 @@ print(colnames(data))
 
 \*Scatter Plot
 
-```{r, warning=FALSE}
-qplot(x = Economy, y= Happiness_Score, data = data, 
-      geom = c("point", "smooth"), method = "lm") +
+```{r}
+data %>%
+ggplot() +
+geom_point(mapping = aes (x = Economy, y= Happiness_Score)) +
 labs(title = 
        "Scatter Plot of Relationship Between 
 Economy and Happiness Score",
 x = "Economy", y = "Happiness Score")
 ```
 
-```{r, warning=FALSE}
-qplot(x = Social, y= Happiness_Score, data = data, 
-      geom = c("point", "smooth"), method = "lm") +
+```{r}
+data %>%
+ggplot() +
+geom_point(mapping = aes (x = Social, y= Happiness_Score)) +
 labs(title = 
        "Scatter Plot of Relationship Between 
 Social and Happiness Score",
 x = "Social", y = "Happiness Score")
 ```
 
-```{r, warning = FALSE}
-qplot(x = Health, y= Happiness_Score, data = data, 
-      geom = c("point", "smooth"), method = "lm") +
+```{r}
+data %>%
+ggplot() +
+geom_point(mapping = aes (x = Health, y= Happiness_Score)) +
 labs(title = 
        "Scatter Plot of Relationship Between 
 Health and Happiness Score",
@@ -214,8 +217,19 @@ data %>%
 ggplot() +
 geom_bin2d(mapping = aes(x = Economy, y = Happiness_Score)) +
 labs(title = "HeatMap (Economy and Happiness Score)",x= "Economy",
-     y= "Happiness_Score")
+         y = "Happiness_Score")
 ```
+
+
+```{r}
+data %>%
+ggplot(aes(x = Economy, y = Happiness_Score)) +
+  geom_bin2d(bins = 30) +  
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(title = "HeatMap with linearline (Economy and Happiness Score)", 
+           x = "Economy", y = "Happiness_Score")
+```
+
 
 ```{r}
 data %>%
@@ -225,6 +239,17 @@ labs(title = "HeatMap (Social and Happiness Score)",x= "Social",
      y= "Happiness_Score")
 ```
 
+
+```{r}
+data %>%
+ggplot(aes(x = Social, y = Happiness_Score)) +
+  geom_bin2d(bins = 30) +  
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(title = "HeatMap with linearline (Social and Happiness Score)", 
+           x = "Social", y = "Happiness_Score")
+```
+
+
 ```{r}
 data %>%
 ggplot() +
@@ -232,6 +257,17 @@ geom_bin2d(mapping = aes(x = Health, y = Happiness_Score)) +
 labs(title = "HeatMap (Health and Happiness Score)",x= "Health",
      y= "Happiness_Score")
 ```
+
+
+```{r}
+data %>%
+ggplot(aes(x = Health, y = Happiness_Score)) +
+  geom_bin2d(bins = 30) +  
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(title = "HeatMap with linearline (Health and Happiness Score)", 
+           x = "Health", y = "Happiness_Score")
+```
+
 
 ```{r}
 data %>%
@@ -241,6 +277,17 @@ labs(title = "HeatMap (Freedom and Happiness Score)",x= "Freedom",
      y= "Happiness_Score")
 ```
 
+
+```{r}
+data %>%
+ggplot(aes(x = Freedom, y = Happiness_Score)) +
+  geom_bin2d(bins = 30) +  
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(title = "HeatMap with linearline (Freedom and Happiness Score)", 
+           x = "Freedom", y = "Happiness_Score")
+```
+
+
 ```{r}
 data %>%
 ggplot() +
@@ -248,6 +295,18 @@ geom_bin2d(mapping = aes(x = Corruption, y = Happiness_Score)) +
 labs(title = "HeatMap (Corruption and Happiness Score)",x= "Corruption",
      y= "Happiness_Score")
 ```
+
+
+```{r}
+data %>%
+ggplot(aes(x = Corruption, y = Happiness_Score)) +
+  geom_bin2d(bins = 30) +  
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(title = "HeatMap (Corruption and Happiness Score)", 
+           x = "Corruption", y = "Happiness_Score")
+```
+
+
 
 ```{r}
  data %>%
@@ -424,8 +483,7 @@ colnames(combined_data) <- c("Mean", "Median", "Max", "IQR", "Variables")
 
 ```{r}
 group_data2 <- combined_data %>%
- pivot_longer(cols = Mean:IQR, names_to = "Summary_Variable" ,
-              values_to = "Value")
+ pivot_longer(cols = Mean:IQR, names_to = "Summary_Variable" , values_to = "Value")
 ```
 
 
@@ -441,8 +499,7 @@ ggplot(data=group_data2, aes(x=Variables, y=Value, group=Summary_Variable)) +
 # linear model using Im
 
 ```{r}
-model <- lm(Happiness_Score ~ Economy + Social + Health + Freedom +
-              Generosity + Corruption, data = data)
+model <- lm(Happiness_Score ~ Economy + Social + Health + Freedom + Generosity + Corruption, data = data)
 
 summary(model)
 ```
@@ -520,8 +577,7 @@ print(p_value)
 ```{r}
 visualize(null_distribution_correlation) +
   shade_p_value(obs_stat = happiness_obs_stat, direction = "two_sided") +
-    labs(title = "Null Distribution of Happiness Score",
-         x = "Correlation", y = "Count")
+    labs(title = "Null Distribution of Happiness Score", x = "Correlation", y = "Count")
 ```
 
 ```{r}
