@@ -430,7 +430,8 @@ data_C <- data %>%
 
 ```{r}
 combined_data <- rbind(data_E, data_S, data_H, data_F, data_C)
-row.names(combined_data) <- c("Economy", "Social", "Health", "Freedom", "Corruption")
+row.names(combined_data) <- c("Economy", "Social", "Health", 
+                              "Freedom", "Corruption")
 print(combined_data)
 ```
 
