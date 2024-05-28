@@ -373,8 +373,10 @@ data_E <- data %>%
   summarize(
     mean= mean(Economy),
     median = median(Economy),
-    max = max(Economy),
-    iqr = IQR(Economy)
+    sd = sd(Economy),
+    iqr = IQR(Economy),
+    min = min(Economy),
+    max = max(Economy)
  )
 ```
 
@@ -383,8 +385,10 @@ data_S <- data %>%
   summarize(
     mean= mean(Social),
     median = median(Social),
-    max = max(Social),
-    iqr = IQR(Social)
+    sd = sd(Social),
+    iqr = IQR(Social),
+    min = min(Social),
+    max = max(Social)
  )
 ```
 
@@ -393,8 +397,10 @@ data_H <- data %>%
   summarize(
     mean= mean(Health),
     median = median(Health),
-    max = max(Health),
-    iqr = IQR(Health)
+    sd = sd(Health),
+    iqr = IQR(Health),
+    min = min(Health),
+    max = max(Health)
  )
 ```
 
@@ -403,8 +409,10 @@ data_F <- data %>%
   summarize(
     mean= mean(Freedom),
     median = median(Freedom),
-    max = max(Freedom),
-    iqr = IQR(Freedom)
+    sd = sd(Freedom),
+    iqr = IQR(Freedom),
+    min = min(Freedom),
+    max = max(Freedom)
  )
 ```
 
@@ -413,28 +421,17 @@ data_C <- data %>%
   summarize(
     mean= mean(Corruption),
     median = median(Corruption),
-    max = max(Corruption),
-    iqr = IQR(Corruption)
+    sd = sd(Corruption),
+    iqr = IQR(Corruption),
+    min = min(Corruption),
+    max = max(Corruption)
  )
 ```
 
 ```{r}
 combined_data <- rbind(data_E, data_S, data_H, data_F, data_C)
-combined_data$c <- c('Economy', 'Social', 'Health', 'Freedom', 'Corruption')
-colnames(combined_data) <- c("Mean", "Median", "Max", "IQR", "Variables")
-```
-
-```{r}
-group_data2 <- combined_data %>%
- pivot_longer(cols = Mean:IQR, names_to = "Summary_Variable",
-              values_to = "Value")
-```
-
-
-```{r}
-ggplot(data=group_data2, aes(x=Variables, y=Value, group=Summary_Variable)) +
-  geom_line(aes(color=Summary_Variable)) +
-  geom_point(aes(color=Summary_Variable))
+row.names(combined_data) <- c("Economy", "Social", "Health", "Freedom", "Corruption")
+print(combined_data)
 ```
 
 
