@@ -438,7 +438,7 @@ print(combined_data)
 
 # [Module 5: Chun Jin Park - Modeling].
 
-# linear model using Im
+# Linear model using Im
 
 ```{r}
 model <- lm(Happiness_Score ~ Economy + Social + Health + Freedom + Generosity
@@ -447,14 +447,14 @@ model <- lm(Happiness_Score ~ Economy + Social + Health + Freedom + Generosity
 summary(model)
 ```
 
-# tidy to get the model coefficients
+# Tidy to get the model coefficients
 
 ```{r}
 coefficients <- tidy(model)
 print(coefficients)
 ```
 
-# glance to get the model's performance metrics
+# Glance to get the model's performance metrics
 
 ```{r}
 performance <- glance(model)
@@ -492,114 +492,83 @@ qqline(residuals(model), col = "red")
 ```
 <<<<<<< HEAD
 =======
+[Module 6: Sena Julsdorf and Hyeongseok Sim]
+```{r}
+model_3 <- lm(Happiness_Score ~ Generosity + Corruption, data = data)
+
+summary(model_3)
+```
+
+```{r}
+coefficients <- tidy(model_3)
+print(coefficients)
+```
+
+```{r}
+performance <- glance(model_3)
+print(performance)
+```
+
+```{r}
+model_2 <- lm(Happiness_Score ~ Economy + Social + Health + Freedom, data = data)
+
+summary(model_2)
+```
+
+```{r}
+coefficients <- tidy(model_2)
+print(coefficients)
+```
+
+
+```{r}
+performance <- glance(model_2)
+print(performance)
+```
+
+```{r}
+model_4 <- lm(Happiness_Score ~ Economy, data = data)
+
+summary(model_4)
+```
+
+```{r}
+performance <- glance(model_4)
+print(performance)
+```
+
+```{r}
+model_5 <- lm(Happiness_Score ~ Social, data = data)
+
+summary(model_5)
+```
+
+```{r}
+performance <- glance(model_5)
+print(performance)
+```
+
+```{r}
+model_6 <- lm(Happiness_Score ~ Health, data = data)
+
+summary(model_6)
+```
+
+```{r}
+performance <- glance(model_6)
+print(performance)
+```
+
+```{r}
+model_7 <- lm(Happiness_Score ~ Freedom, data = data)
+
+summary(model_7)
+```
+
+```{r}
+performance <- glance(model_7)
+print(performance)
+```
 
 =======
-[ Module 6: SeNa Julsdorf, Hyeongseok Sim] 
-
-```{r}
-null_distribution_correlation <- data %>%
-  specify(Happiness_Score ~ Social) %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 10000, type = "permute") %>%
-  calculate(stat = "correlation")
-```
-
-```{r}
-happiness_obs_stat <- data %>%
-  specify(Happiness_Score ~ Social) %>%
-  calculate(stat = "correlation")
-```
-
-```{r}
-p_value <- null_distribution_correlation %>%
-  get_p_value(obs_stat = happiness_obs_stat, direction = "both")
-```
-```{r}
-print(p_value)
-```
-```{r}
-visualize(null_distribution_correlation) +
-  shade_p_value(obs_stat = happiness_obs_stat, direction = "two_sided") +
-    labs(title = "Null Distribution of Happiness Score", x = "Correlation",
-         y = "Count")
-```
-
-```{r}
-null_distribution_correlation %>%
-  ggplot +
-  geom_density(mapping = aes(x = stat), adjust = 5) +
-  labs(title = "Null Hypothesis Density Plot", x = "stats", y = "density")
-```
-
-
-```{r}
-null_distribution_correlation %>%
-  ggplot() +
-  geom_histogram(mapping = aes(x = stat), bins = 10) +
-  geom_density(mapping = aes(x = stat), adjust = 10) +
-  labs(title = "Null Hypothesis Density Plot", x = "stats", y = "density")
-```
-
-```{r}
-null_distribution_correlation %>%
-ggplot()+
-geom_histogram(mapping = aes(x = stat, y = ..density..), bins = 10) +
-geom_density(mapping = aes(x = stat), adjust = 5) +
-labs(title = "Density and Null Hypothesis PMF Plot",
-x = "Stat", y = "Density")
-```
-
-
-
-
-
-=======
-[ Module 7: Jeonghwa Cho]
-
-
-
-```{r}
-bootstraps_distribution_correlation <- data %>%
-specify(Happiness_Score ~ Social) %>%
-generate( reps = 10000, type = "bootstrap") %>%
-calculate(stat = "correlation")
-```
-
-```{r}
-bootstrap_ci <- bootstraps_distribution_correlation %>%
-get_confidence_interval()
-
-```
-
-```{r}
-bootstrap_ci
-
-```
-
-```{r}
-bootstraps_distribution_correlation %>%
-visualize()+
-shade_confidence_interval(bootstrap_ci)+
-ggtitle("Bootstrap Distribution")+
-xlab("Correlation")+
-ylab("count")
-
-```
-
-```{r}
-bootstrap_results <- cohens_d_bootstrap(
-data = data_long,
-model = Happiness_Score ~ Variable)
-
-```
-
-```{r}
-bootstrap_report(bootstrap_results)
-
-```
-
-```{r}
-plot_ci(bootstrap_results)
-
-```
 
