@@ -430,10 +430,19 @@ data_C <- data %>%
 
 ```{r}
 combined_data <- rbind(data_E, data_S, data_H, data_F, data_C)
-row.names(combined_data) <- c("Economy", "Social", "Health", 
-                              "Freedom", "Corruption")
-print(combined_data)
 ```
+
+```{r}
+combined_data_rounded <- combined_data %>%
+  mutate(across(everything(), ~ round(., 2)))
+```
+
+```{r}
+row.names(combined_data_rounded) <- c("Economy", "Social", "Health","Freedom", "Corruption")
+print(combined_data_rounded)
+```
+
+
 
 
 # [Module 5: Chun Jin Park - Modeling].
