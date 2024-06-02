@@ -501,83 +501,152 @@ qqline(residuals(model), col = "red")
 ```
 <<<<<<< HEAD
 =======
+
 [Module 6: Sena Julsdorf and Hyeongseok Sim]
-```{r}
-model_3 <- lm(Happiness_Score ~ Generosity + Corruption, data = data)
 
-summary(model_3)
+```{r}
+ggplot(data, aes(x = Economy, y = Happiness_Score)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, col = "blue") +
+  labs(title = "Scatter Plot of Happiness Score based on Economy", 
+       x = "Economic Score", 
+       y = "Happiness Score")
 ```
 
 ```{r}
-coefficients <- tidy(model_3)
-print(coefficients)
+library(ggplot2)
+library(caTools)
 ```
 
 ```{r}
-performance <- glance(model_3)
-print(performance)
+set.seed(123)
+split <- sample.split(data$Happiness_Score, SplitRatio = 0.5)
+training_set <- subset(data, split == TRUE)
+testing_set <- subset(data, split == FALSE)
 ```
 
 ```{r}
-model_2 <- lm(Happiness_Score ~ Economy + Social + Health + Freedom, data = data)
-
-summary(model_2)
+lmmodel <- lm(Happiness_Score ~ Economy, data = testing_set)
+summary(lmmodel)
 ```
 
 ```{r}
-coefficients <- tidy(model_2)
-print(coefficients)
+predictions <- predict(lmmodel, newdata = testing_set)
+```
+
+```{r}
+rmse <- sqrt(mean((testing_set$Happiness_Score - predictions)^2))
+print(paste("RMSE: ", rmse))
+```
+```{r}
+r_squared <- summary(lmmodel)$r.squared
+print(paste("R-squared: ", r_squared))
+```
+
+```{r}
+ggplot(data, aes(x = Social, y = Happiness_Score)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, col = "blue") +
+  labs(title = "Scatter Plot of Happiness Score based on Social", 
+       x = "Social Score", 
+       y = "Happiness Score")
+```
+
+```{r}
+lmmodel_2 <- lm(Happiness_Score ~ Social, data = testing_set)
+summary(lmmodel_2)
+```
+```{r}
+predictions_2 <- predict(lmmodel_2, newdata = testing_set)
+```
+
+```{r}
+rmse_2 <- sqrt(mean((testing_set$Happiness_Score - predictions_2)^2))
+print(paste("RMSE (Social model): ", rmse_2))
+```
+
+```{r}
+r_squared_2 <- summary(lmmodel_2)$r.squared
+print(paste("R-squared (Social model): ", r_squared_2))
 ```
 
 
 ```{r}
-performance <- glance(model_2)
-print(performance)
+ggplot(data, aes(x = Freedom, y = Happiness_Score)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, col = "blue") +
+  labs(title = "Scatter Plot of Happiness Score based on Freedom", 
+       x = "Freedom Score", 
+       y = "Happiness Score")
+```
+
+
+```{r}
+lmmodel_3 <- lm(Happiness_Score ~ Freedom, data = testing_set)
+summary(lmmodel_3)
 ```
 
 ```{r}
-model_4 <- lm(Happiness_Score ~ Economy, data = data)
-
-summary(model_4)
+predictions_3 <- predict(lmmodel_3, newdata = testing_set)
 ```
 
 ```{r}
-performance <- glance(model_4)
-print(performance)
+rmse_3 <- sqrt(mean((testing_set$Happiness_Score - predictions_3)^2))
+print(paste("RMSE (Freedom model): ", rmse_3))
 ```
 
 ```{r}
-model_5 <- lm(Happiness_Score ~ Social, data = data)
-
-summary(model_5)
+r_squared_3 <- summary(lmmodel_3)$r.squared
+print(paste("R-squared (Freedom model): ", r_squared_3))
 ```
 
 ```{r}
-performance <- glance(model_5)
-print(performance)
+ggplot(data, aes(x = Health, y = Happiness_Score)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, col = "blue") +
+  labs(title = "Scatter Plot of Happiness Score based on Health", 
+       x = "Health Score", 
+       y = "Happiness Score")
 ```
 
 ```{r}
-model_6 <- lm(Happiness_Score ~ Health, data = data)
-
-summary(model_6)
+lmmodel_4 <- lm(Happiness_Score ~ Health, data = testing_set)
+summary(lmmodel_4)
+```
+```{r}
+predictions_4 <- predict(lmmodel_4, newdata = testing_set)
 ```
 
 ```{r}
-performance <- glance(model_6)
-print(performance)
+rmse_4 <- sqrt(mean((testing_set$Happiness_Score - predictions_4)^2))
+print(paste("RMSE (Health model): ", rmse_4))
 ```
 
 ```{r}
-model_7 <- lm(Happiness_Score ~ Freedom, data = data)
-
-summary(model_7)
+r_squared_4 <- summary(lmmodel_4)$r.squared
+print(paste("R-squared (Health model): ", r_squared_4))
 ```
 
 ```{r}
-performance <- glance(model_7)
-print(performance)
+lmmodel_5 <- lm(Happiness_Score ~ Economy, data = training_set)
+summary(lmmodel_5)
 ```
 
-=======
+```{r}
+predictions_5 <- predict(lmmodel, newdata = training_set)
+```
+
+```{r}
+rmse_5 <- sqrt(mean((testing_set$Happiness_Score - predictions_5)^2))
+print(paste("RMSE: ", rmse))
+```
+
+```{r}
+r_squared_5 <- summary(lmmodel_5)$r.squared
+```
+
+```{r}
+print(paste("R-squared (Economy model): ", r_squared_5))
+```
+
 
