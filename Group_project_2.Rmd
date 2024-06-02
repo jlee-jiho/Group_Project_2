@@ -442,10 +442,7 @@ row.names(combined_data_rounded) <- c("Economy", "Social", "Health","Freedom", "
 print(combined_data_rounded)
 ```
 
-
-
-
-# [Module 5: Chun Jin Park - Modeling].
+# [Module 5: Chun Jin Park - Modeling]
 
 # Linear model using Im
 
@@ -499,8 +496,6 @@ ggplot(data, aes(x = predict(model), y = residuals(model))) +
 qqnorm(residuals(model))
 qqline(residuals(model), col = "red")
 ```
-<<<<<<< HEAD
-=======
 
 [Module 6: Sena Julsdorf and Hyeongseok Sim]
 
@@ -570,7 +565,6 @@ r_squared_2 <- summary(lmmodel_2)$r.squared
 print(paste("R-squared (Social model): ", r_squared_2))
 ```
 
-
 ```{r}
 ggplot(data, aes(x = Freedom, y = Happiness_Score)) +
   geom_point() +
@@ -579,7 +573,6 @@ ggplot(data, aes(x = Freedom, y = Happiness_Score)) +
        x = "Freedom Score", 
        y = "Happiness Score")
 ```
-
 
 ```{r}
 lmmodel_3 <- lm(Happiness_Score ~ Freedom, data = testing_set)
