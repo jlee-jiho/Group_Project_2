@@ -438,7 +438,8 @@ combined_data_rounded <- combined_data %>%
 ```
 
 ```{r}
-row.names(combined_data_rounded) <- c("Economy", "Social", "Health","Freedom", "Corruption")
+row.names(combined_data_rounded) <- c("Economy", "Social", 
+                                      "Health","Freedom", "Corruption")
 print(combined_data_rounded)
 ```
 
